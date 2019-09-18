@@ -18,7 +18,7 @@ pub trait FrontEnd {
 pub trait Renderer {
     /// Passes control to the game loop. This method should not return until the player quits the
     /// game.
-    fn game_loop(&self);
+    fn game_loop(self: Box<Self>);
 }
 
 pub type Channel = (Box<dyn channel::Sender<Message>>, Box<dyn channel::Receiver<Input>>);

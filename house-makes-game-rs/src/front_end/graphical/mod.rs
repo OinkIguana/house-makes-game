@@ -18,6 +18,7 @@ struct Renderer {
     window: Window,
 }
 
+#[derive(Clone)]
 struct Sender {
     proxy: EventLoopProxy<Message>,
 }
@@ -40,7 +41,14 @@ impl super::FrontEnd for Graphical {
 }
 
 impl super::Renderer for Renderer {
-    fn game_loop(&self) { unimplemented!() }
+    fn game_loop(self: Box<Self>) {
+        self.event_loop.run(|event, _window_target, control_flow| {
+            match event {
+                Event::UserEvent(Message::Quit) => *control_flow = ControlFlow::Exit,
+                _ => (),
+            }
+        });
+    }
 }
 
 impl super::channel::Sender<Message> for Sender {

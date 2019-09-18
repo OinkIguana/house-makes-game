@@ -23,5 +23,12 @@ impl super::FrontEnd for Text {
 }
 
 impl super::Renderer for Renderer {
-    fn game_loop(&self) { unimplemented!() }
+    fn game_loop(self: Box<Self>) {
+        loop {
+            // TODO: need to either read a line OR receive a Message here.
+            let line: String = read!("{}\n");
+            let input = Input::parse(&line);
+            self.inputs.send(input).unwrap();
+        }
+    }
 }

@@ -3,12 +3,15 @@
 // This crate is not compatible with new macro system, so it must be imported the old way
 #[macro_use] extern crate text_io;
 
+use std::thread::spawn;
+
 mod front_end;
 mod input;
 mod message;
 
 use front_end::FrontEnd;
 use input::{Input, Command};
+use message::Message;
 
 /// House Makes Game. Play by running this command.
 #[derive(Debug, structopt::StructOpt)]
@@ -27,7 +30,15 @@ fn main(args: Opts) {
         front_end::Graphical::new().split()
     };
 
-    // TODO: spawn a thread here and start processing inputs
+    let handle = spawn(move || {
+        let (sx, tx) = channel;
+        match tx.recv().unwrap() {
+            Input::Command(Command::Quit) => sx.send(Message::Quit).unwrap(),
+            _ => (),
+        }
+    });
 
     renderer.game_loop();
+
+    handle.join().unwrap();
 }
