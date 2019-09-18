@@ -3,17 +3,17 @@ mod command;
 pub use command::Command;
 
 #[derive(Clone, Debug)]
-pub enum Input<'a> {
+pub enum Input {
     Command(Command),
-    Action(&'a str),
+    Action(String)
 }
 
-impl<'a> Input<'a> {
-    pub fn parse<S: AsRef<str> + 'a>(string: &'a S) -> Self {
+impl Input {
+    pub fn parse<S: AsRef<str>>(string: S) -> Self {
         let s = string.as_ref();
         match s.chars().next() {
-            Some('\\') => Input::Command(Command::parse(&s[1..])),
-            _ => Input::Action(&s)
+            Some('\\') => Input::Command(Command::parse(s[1..].to_string())),
+            _ => Input::Action(s.to_string())
         }
     }
 }
