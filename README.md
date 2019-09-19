@@ -31,18 +31,18 @@ what is happening and entertain.
 
 Tasks:
 1.  Content
-    - [x] General story
-    - [x] Write the actual text
-    - [x] Design scenarios, obstacles, solutions
+    - [ ] General story
+    - [ ] Write the actual text
+    - [ ] Design scenarios, obstacles, solutions
 2.  NLP engine
-    - [x] Parse sentences
-    - [x] Identify keywords/meanings/intentions (based on input from game)
-    - [x] Produce some description of meanings for the game to react to
-    - [x] Machine learning?? Or just a bunch of regex..?
+    - [ ] Parse sentences
+    - [ ] Identify keywords/meanings/intentions (based on input from game)
+    - [ ] Produce some description of meanings for the game to react to
+    - [ ] Machine learning?? Or just a bunch of regex..?
 3.  Input processing
-    - [x] Map intentions from NLP engine and convert them to actions
+    - [ ] Map intentions from NLP engine and convert them to actions
 4.  UI/UX
-    - [ ] Receive user inputs
-    - [x] Design the game UI
-    - [x] Code the game UI
+    - [x] Receive user inputs
+    - [ ] Design the game UI
+    - [ ] Code the game UI
 
