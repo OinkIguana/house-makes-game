@@ -6,7 +6,7 @@ version = "0.1.0"
 [dependencies]
 paw = "1.0.0"
 text_io = "0.1.7"
-winit = "0.20.0-alpha3"
+ggez = "0.5.1"
 
 [dependencies.structopt]
 features = ["paw"]
