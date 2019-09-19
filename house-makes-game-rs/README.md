@@ -34,3 +34,21 @@ The code is all in the `src/` directory. `main.rs` is where the `main` function 
 To learn all of Rust, read the [Rust book](https://doc.rust-lang.org/book/). To learn about the libraries we are using, 
 see the documentation (as compiled above) or find it online by searching [docs.rs](https://docs.rs/). You can find 
 documentation for the Rust standard library [here](https://doc.rust-lang.org/std/).
+
+## Dependencies
+
+### Windows
+
+Unknown.
+
+### Mac
+
+Seems ok so far for me.
+
+### Linux (Ubuntu)
+
+In order to compile, you might need to install some dependencies:
+
+```
+sudo apt install libasound2-dev libudev-dev
+```

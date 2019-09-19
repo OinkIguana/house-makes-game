@@ -2,7 +2,7 @@
 
 use std::sync::mpsc;
 
-use ggez;
+use ggez::{self, graphics};
 
 use crate::input::Input;
 use crate::message::Message;
@@ -42,7 +42,14 @@ impl ggez::event::EventHandler for State {
         Ok(())
     }
 
-    fn draw(&mut self, _ctx: &mut ggez::Context) -> ggez::GameResult { Ok(()) }
+    fn draw(&mut self, ctx: &mut ggez::Context) -> ggez::GameResult {
+        graphics::clear(ctx, graphics::WHITE);
+
+        let input_prompt = graphics::Text::new(graphics::TextFragment::new(self.input_buffer.as_str()).color(graphics::BLACK));
+        graphics::draw(ctx, &input_prompt, graphics::DrawParam::new().dest([32., 32.]))?;
+
+        graphics::present(ctx)
+    }
 
     fn text_input_event(&mut self, _ctx: &mut ggez::Context, ch: char) {
         match ch {
