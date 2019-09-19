@@ -4,6 +4,9 @@ use std::thread::spawn;
 use crate::message::Message;
 use crate::input::Input;
 
+/// A text based front end for the game, which operates on stdin/stdout. This is mostly useful in
+/// development to allow writing scripted tests, for working on the game through SSH, or for
+/// testing and prototyping things quickly without having to deal with a UI.
 pub struct Text;
 
 impl Text {
@@ -17,7 +20,9 @@ struct Renderer {
 
 impl super::FrontEnd for Text {
     fn split(self) -> (Box<dyn super::Renderer>, super::Channel) {
+        // two channels are created, one to send messages in
         let (sender, messages) = mpsc::channel();
+        // and one to send inputs out
         let (inputs, receiver) = mpsc::channel();
         (Box::new(Renderer { inputs, messages }), (Box::new(sender), Box::new(receiver)))
     }
@@ -42,7 +47,7 @@ impl super::Renderer for Renderer {
                 }
             }
         });
-        // another thread that passes messages from self.messages to internal event queue
+        // and another thread that passes Messages received from the game engine to the internal event queue
         let messages = self.messages;
         spawn(move || {
             for msg in messages.iter() {
@@ -55,7 +60,13 @@ impl super::Renderer for Renderer {
         // then process all the received messages here
         for internal in tx.iter() {
             match internal {
+                // input events get sent to the outside game engine
                 Internal::Input(input) => self.inputs.send(input).unwrap(),
+
+                // message events (received from outside) are processed here
+
+                // when the `\quit` message is received, exit. The channels will be dropped and
+                // then the other two threads above will terminate on their own eventually!
                 Internal::Message(Message::Quit) => break,
             }
         }

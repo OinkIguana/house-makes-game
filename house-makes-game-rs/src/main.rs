@@ -1,4 +1,9 @@
 //! This is the entry point for House Makes Game.
+//!
+//! Run the game with `cargo run`. This will open the game window.
+//!
+//! Alternatively, or for automated scripting purposes, add the `--no-gfx` flag to run using the
+//! command-line friendly text only interface: `cargo run -- --no-gfx`
 
 // This crate is not compatible with new macro system, so it must be imported the old way
 #[macro_use] extern crate text_io;

@@ -1,5 +1,5 @@
-//! A more general and simplified interface for sender/receiver which is used to communicate with
-//! the renderer of the front end.
+//! A more general and simplified interface for sender/receiver (compared to [std::sync::mpsc::channel]) 
+//! which is used to communicate with the renderer of the front end.
 
 use std::sync::mpsc;
 
@@ -14,7 +14,7 @@ pub trait Receiver<T: Send>: Send {
 impl<T: Send> Sender<T> for mpsc::Sender<T> {
     fn send(&self, msg: T) -> Result<(), ()> {
         mpsc::Sender::send(self, msg)
-            .map_err(|error| ())
+            .map_err(|_| ())
     }
 }
 
