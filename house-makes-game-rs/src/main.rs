@@ -32,9 +32,15 @@ fn main(args: Opts) {
 
     let handle = spawn(move || {
         let (sx, tx) = channel;
-        match tx.recv().unwrap() {
-            Input::Command(Command::Quit) => sx.send(Message::Quit).unwrap(),
-            _ => (),
+        loop {
+            let input = match tx.recv() {
+                Ok(input) => input,
+                Err(()) => break,
+            };
+            match input {
+                Input::Command(Command::Quit) => sx.send(Message::Quit).unwrap(),
+                _ => (),
+            }
         }
     });
 
