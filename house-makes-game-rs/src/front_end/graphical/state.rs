@@ -1,3 +1,5 @@
+//! Graphical front end state management and event handling
+
 use std::sync::mpsc;
 
 use ggez;
@@ -5,9 +7,13 @@ use ggez;
 use crate::input::Input;
 use crate::message::Message;
 
+/// The current state of the UI. Very basic right now, but can be updated for everything we need.
 pub struct State {
+    /// channel to send inputs to the game engine
     inputs: mpsc::Sender<Input>,
+    /// channel to receive messages from the game engine
     messages: mpsc::Receiver<Message>,
+    /// what the user has currently typed in, but not yet sent
     input_buffer: String,
 }
 
@@ -17,6 +23,7 @@ impl State {
     }
 }
 
+// handles all the events of the game. See the [ggez documentation](https://ggez.rs/) for more info.
 impl ggez::event::EventHandler for State {
     fn update(&mut self, ctx: &mut ggez::Context) -> ggez::GameResult {
         loop {
@@ -49,9 +56,11 @@ impl ggez::event::EventHandler for State {
     }
 }
 
+// our own event handler for handling messages from the game engine
 impl State {
     fn message_received_event(&mut self, ctx: &mut ggez::Context, message: Message) -> ggez::GameResult {
         match message {
+            // Quit the game by calling quit
             Message::Quit => ggez::event::quit(ctx),
         }
 

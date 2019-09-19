@@ -1,5 +1,5 @@
 use std::sync::mpsc;
-use ggez::{self, event, graphics};
+use ggez::{self, event};
 
 use crate::message::Message;
 use crate::input::Input;
