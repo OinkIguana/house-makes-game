@@ -39,7 +39,8 @@ documentation for the Rust standard library [here](https://doc.rust-lang.org/std
 
 ### Windows
 
-Unknown.
+You will need to have installed MSVC before you will be able to compile anything. MSVC comes with Visual Studio, so make
+sure that is installed (2019 Community Edition worked fine for me. Pretty sure any other version will too)
 
 ### Mac
 
