@@ -1,6 +1,6 @@
 # House Makes Game (in Rust)
 
-To develop/run, first install Rust by visiting [https://rustup.rs/]() and following the instructions. 
+To develop/run, first install Rust by visiting [https://rustup.rs/](https://rustup.rs/) and following the instructions. 
 This will install 3 programs:
     1.  `rustup`: a program used to install and update Rust again later (by running `rustup update`)
     2.  `rustc`: the Rust compiler (you'll never need to touch this yourself)
