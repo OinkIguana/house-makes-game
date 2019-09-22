@@ -2,6 +2,7 @@
 
 use std::sync::mpsc;
 
+use ggez::nalgebra as na;
 use ggez::{self, graphics};
 
 use crate::input::Input;
@@ -45,7 +46,77 @@ impl ggez::event::EventHandler for State {
     fn draw(&mut self, ctx: &mut ggez::Context) -> ggez::GameResult {
         graphics::clear(ctx, graphics::WHITE);
 
-        let input_prompt = graphics::Text::new(graphics::TextFragment::new(self.input_buffer.as_str()).color(graphics::BLACK));
+        let (w, h) = graphics::size(ctx);
+        let margin = 40.0;
+        
+
+        let circle = graphics::Mesh::new_rectangle(
+            ctx,
+            graphics::DrawMode::fill(),
+            [0.0, 0.0, w / 3.0, h].into(),
+            graphics::BLACK,
+        )?;
+        graphics::draw(ctx, &circle, (na::Point2::new(0.0, 0.0),))?;
+
+        let narrative = graphics::Mesh::new_rectangle(
+            ctx,
+            graphics::DrawMode::fill(),
+            [0.0, 0.0, 2.0 * w / 3.0, 4.0 * h / 6.0].into(),
+            graphics::Color::new(0.0, 1.0, 0.0, 1.0),
+        )?;
+        graphics::draw(ctx, &narrative, (na::Point2::new(w / 3.0, 0.0),))?;
+
+        let input = graphics::Mesh::new_rectangle(
+            ctx,
+            graphics::DrawMode::fill(),
+            [0.0, 0.0, 2.0 * w / 3.0 - margin, h / 6.0 - margin].into(),
+            graphics::Color::new(1.0, 0.0, 1.0, 1.0),
+        )?;
+        graphics::draw(ctx, &input, (na::Point2::new(w / 3.0 + margin / 2.0, 4.0 * h / 6.0 + margin / 2.0),))?;
+
+        let mut w_btn = w / 3.0;
+
+        let dictionary = graphics::Mesh::new_rectangle(
+            ctx,
+            graphics::DrawMode::fill(),
+            [0.0, 0.0, (2.0 * w / 3.0) / 4.0  - margin, h / 6.0 - margin].into(),
+            graphics::Color::new(1.0, 0.0, 0.0, 1.0),
+        )?;
+        graphics::draw(ctx, &dictionary, (na::Point2::new(w_btn + margin / 2.0, 5.0 * h / 6.0),))?;
+
+        w_btn += (2.0 * w / 3.0) / 4.0;
+
+        let inventory = graphics::Mesh::new_rectangle(
+            ctx,
+            graphics::DrawMode::fill(),
+            [0.0, 0.0, (2.0 * w / 3.0) / 4.0  - margin, h / 6.0 - margin].into(),
+            graphics::Color::new(1.0, 0.0, 0.0, 1.0),
+        )?;
+        graphics::draw(ctx, &inventory, (na::Point2::new(w_btn + margin / 2.0, 5.0 * h / 6.0),))?;
+
+        w_btn += (2.0 * w / 3.0) / 4.0;
+
+        let map = graphics::Mesh::new_rectangle(
+            ctx,
+            graphics::DrawMode::fill(),
+            [0.0, 0.0, (2.0 * w / 3.0) / 4.0  - margin, h / 6.0 - margin].into(),
+            graphics::Color::new(1.0, 0.0, 0.0, 1.0),
+        )?;
+        graphics::draw(ctx, &map, (na::Point2::new(w_btn + margin / 2.0, 5.0 * h / 6.0),))?;
+
+        w_btn += (2.0 * w / 3.0) / 4.0;
+
+        let log = graphics::Mesh::new_rectangle(
+            ctx,
+            graphics::DrawMode::fill(),
+            [0.0, 0.0, (2.0 * w / 3.0) / 4.0  - margin, h / 6.0 - margin].into(),
+            graphics::Color::new(1.0, 0.0, 0.0, 1.0),
+        )?;
+        graphics::draw(ctx, &log, (na::Point2::new(w_btn + margin / 2.0, 5.0 * h / 6.0),))?;
+
+
+        // must be last to be drawn (bottom up aka painter's algorithm)
+        let input_prompt = graphics::Text::new(graphics::TextFragment::new(self.input_buffer.as_str()).color(graphics::WHITE));
         graphics::draw(ctx, &input_prompt, graphics::DrawParam::new().dest([32., 32.]))?;
 
         graphics::present(ctx)
