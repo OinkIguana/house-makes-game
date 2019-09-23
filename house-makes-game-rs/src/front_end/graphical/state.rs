@@ -48,7 +48,6 @@ impl ggez::event::EventHandler for State {
 
         let (w, h) = graphics::size(ctx);
         let margin = 40.0;
-        
 
         let circle = graphics::Mesh::new_rectangle(
             ctx,
@@ -113,7 +112,6 @@ impl ggez::event::EventHandler for State {
             graphics::Color::new(1.0, 0.0, 0.0, 1.0),
         )?;
         graphics::draw(ctx, &log, (na::Point2::new(w_btn + margin / 2.0, 5.0 * h / 6.0),))?;
-
 
         // must be last to be drawn (bottom up aka painter's algorithm)
         let input_prompt = graphics::Text::new(graphics::TextFragment::new(self.input_buffer.as_str()).color(graphics::WHITE));
